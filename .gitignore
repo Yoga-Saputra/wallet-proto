@@ -1,0 +1,10 @@
+# bashscript
+*.sh
+
+# gitmodules
+.gitmodules
+
+# IDE files
+.vscode
+.DS_Store
+.idea

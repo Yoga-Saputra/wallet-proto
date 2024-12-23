@@ -1,0 +1,56 @@
+/*
+ * Provider System gRPC Services
+ *
+ * Sync Credit Provider related messages.
+ * This proto contains everything related to synchronize credit provider services
+ * accepted payload, returned response and method.
+ */
+syntax = "proto3";
+
+package wallet.v1.provsys;
+
+import "google/protobuf/wrappers.proto";
+
+// Descriptor for Golang
+option go_package = "wallet/v1/provsys/syncp";
+
+// Descriptor for PHP
+option php_namespace = "Wallet\\V1\\ProvSys\\Syncp";
+
+/*
+ * Service for handling syncing member's credit that called by provider.
+ */
+service Syncp {
+    // Used to getting member credit.
+    rpc Credit (SyncCredit.Req) returns (SyncCredit.Res);
+}
+
+/*
+ * Represents the sync credit request and response standard message.
+ */
+message SyncCredit {
+    /** Accepted request payload. */
+    message Req {
+        string p_id = 1 [json_name="pId"]; /// pId of member.
+        optional string currency = 2 [json_name="currency"]; /// Currency of member.
+        string provider_code = 9 [json_name="providerCode"]; /// provider code, e.g pgs.
+    }
+
+    /** Response message that wil be returned in response "data". */
+    message Data {
+        string p_id = 2 [json_name="pId"]; /// pId of member.
+        string currency = 3 [json_name="currency"]; /// Currency of member.
+        double credit = 4 [json_name="credit"]; /// Credit amount of member.
+        int64 last_update = 6 [json_name="lastUpdate"]; /// Last update credit info.
+        bool is_locked = 7 [json_name="isLocked"]; /// Lock wallet status of member.
+        bool is_disabled = 8 [json_name="isDisabled"]; /// Disable wallet status of member.
+    }
+
+    /** Response message that will be returned by sync credit services. */
+    message Res {
+        bool success = 1 [json_name="success"]; /// Status of the response.
+        int32 code = 2 [json_name="code"]; /// Code of the response.
+        google.protobuf.StringValue error = 3 [json_name="error"]; /// Error info.
+        Data data = 4 [json_name="data"]; /// Data of the response.
+    }
+}

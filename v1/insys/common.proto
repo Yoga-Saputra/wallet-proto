@@ -1,0 +1,48 @@
+/*
+ * Internal System gRPC Services
+ *
+ * Common task related messages.
+ * This proto contains everything related to common task services
+ * accepted payload, returned response and method.
+ */
+syntax = "proto3";
+
+package wallet.v1.insys;
+
+import "google/protobuf/wrappers.proto";
+
+// Descriptor for Golang
+option go_package = "wallet/v1/insys/common";
+
+// Descriptor for PHP
+option php_namespace = "Wallet\\V1\\InSys\\Common";
+
+/*
+ * Service for handling common or basic task on wallet.
+ */
+service Common {
+    // Used to creating or inserting a new wallet record.
+    rpc CreateWallet (CreateWallet.Req) returns (CreateWallet.Res);
+}
+
+/*
+ * Represents the create wallet request and response standard message.
+ */
+message CreateWallet {
+    /** Accepted request payload for create wallet service. */
+    message Req {
+        uint32 branch_id = 1 [json_name="branchId"]; /// ID of branch.
+        uint64 member_id = 2 [json_name="memberId"]; /// ID of member.
+        string p_id = 3 [json_name="pId"]; /// pID of member.
+        string currency = 4 [json_name="currency"]; /// Currency of member.
+        string username = 5 [json_name="username"]; /// Username of member.
+    }
+
+    /** Response message that will be returned from create wallet service. */
+    message Res {
+        bool success = 1 [json_name="success"]; /// Status of the response.
+        int32 code = 2 [json_name="code"]; /// Code of the response.
+        google.protobuf.StringValue error = 3 [json_name="error"]; /// Error info.
+        string data = 4 [json_name="data"]; /// Data of the response.
+    }
+}

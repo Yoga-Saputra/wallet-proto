@@ -1,0 +1,6 @@
+[submodule "wallet_pb_go"]
+	path = wallet_pb_go
+	url = https://token@github.com/Yoga-Saputra/your_repository
+[submodule "wallet_pb_php"]
+	path = wallet_pb_php
+	url = https://token@github.com/Yoga-Saputra/your_repository
